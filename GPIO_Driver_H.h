@@ -43,19 +43,18 @@
 // ==========================
 typedef struct
 {
-    uint8_t pin_no;       		// 0 - 15
-    uint8_t mode;            // Input, Output, Alt, Analog
-    uint8_t oType;           // Output type: Push-Pull or Open-Drain
-    uint8_t speed;           // Speed: Low to High
-    uint8_t pull;            // Pull-up/Pull-down
-    uint8_t altFunc;         // Alternate function (0 - 15)
+	uint8_t pin_no;       		// 0 - 15
+	uint8_t mode;            // Input, Output, Alt, Analog
+	uint8_t oType;           // Output type: Push-Pull or Open-Drain
+	uint8_t speed;           // Speed: Low to High
+	uint8_t pull;            // Pull-up/Pull-down
+	uint8_t altFunc;         // Alternate function (0 - 15)
 } GPIO_config_t;
 
 // ==========================
 // API Prototypes
 // ==========================
 
-void GPIO_clock_enable(GPIO_TypeDef *GPIOx);
 void GPIO_init(GPIO_TypeDef *GPIOx, GPIO_config_t *pinConfig);
 void GPIO_write_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no, uint8_t value);
 uint8_t GPIO_read_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no);

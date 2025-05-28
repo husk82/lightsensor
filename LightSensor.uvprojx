@@ -260,17 +260,17 @@
                 <Size>0x0</Size>
               </XRAM>
               <OCR_RVCT1>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT2>
               <OCR_RVCT3>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT3>
@@ -280,7 +280,7 @@
                 <Size>0x80000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT5>
@@ -403,6 +403,16 @@
               <FileName>GPIO_Driver_H.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\GPIO_Driver_H.h</FilePath>
+            </File>
+            <File>
+              <FileName>EXTI_Driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\EXTI_Driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>EXTI_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\EXTI_Driver.c</FilePath>
             </File>
           </Files>
         </Group>

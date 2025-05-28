@@ -43,10 +43,8 @@ static void gpio_config_alt_func(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t 
 	GPIOx->AFR[reg_idx] |= (af << bit_pos);    // Set AF
 }
 
-//
-// ==== APIs ====
-//
-void GPIO_clock_enable(GPIO_TypeDef *GPIOx)
+// .6 GPIOx clock enabbler
+static void GPIO_clock_enable(GPIO_TypeDef *GPIOx)
 {
 	if (GPIOx == GPIOA)
 		RCC->AHB1ENR |= (1 << 0);
@@ -65,6 +63,11 @@ void GPIO_clock_enable(GPIO_TypeDef *GPIOx)
 	else if (GPIOx == GPIOH)
 		RCC->AHB1ENR |= (1 << 7);
 }
+
+//
+// ==== APIs ====
+//
+
 
 uint8_t GPIO_read_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no)
 {
@@ -90,6 +93,9 @@ void GPIO_toggle_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no)
 // Main GPIO init function
 void GPIO_init(GPIO_TypeDef *GPIOx, GPIO_config_t *pinConfig)
 {
+	// Enable GPIOx clock
+	GPIO_clock_enable(GPIOx);
+	
 	// Extract values from the structure
 	uint8_t pin_no   = pinConfig->pin_no;
 	uint8_t mode     = pinConfig->mode;
