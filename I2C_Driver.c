@@ -1,39 +1,55 @@
 #include "I2C_Driver_H.h"
 
-void I2C1_init(void)
+#define TIMEOUT 10000
+
+I2C_Status_t I2C_init(I2C_TypeDef *I2Cx, uint32_t pclk1, uint32_t i2c_speed)
 {
-	// Enable clocks
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-	RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+	if (!I2Cx || pclk1 == 0 || i2c_speed == 0 || i2c_speed > 400000)
+		return I2C_ERR_INVALID_SPEED;
 
-	// Configure PB8 (SCL) and PB9 (SDA)
-	GPIOB->MODER &= ~((3 << (8*2)) | (3 << (9*2)));  // Clear mode
-	GPIOB->MODER |=  ((2 << (8*2)) | (2 << (9*2)));  // Alt func
-	GPIOB->OTYPER |= (1 << 8) | (1 << 9);            // Open-drain
-	GPIOB->OSPEEDR |= (3 << (8*2)) | (3 << (9*2));   // High speed
-	GPIOB->PUPDR |= (1 << (8*2)) | (1 << (9*2));     // Pull-up
-	GPIOB->AFR[1] |= (4 << ((8 - 8) * 4)) | (4 << ((9 - 8) * 4));  // AF4 for I2C1
+	if (I2Cx == I2C1)
+		RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+	else if (I2Cx == I2C2)
+		RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
+	else if (I2Cx == I2C3)
+		RCC->APB1ENR |= RCC_APB1ENR_I2C3EN;
 
-	// Reset I2C1
-	I2C1->CR1 |= I2C_CR1_SWRST;
-	I2C1->CR1 &= ~I2C_CR1_SWRST;
+	I2Cx->CR1 |= I2C_CR1_SWRST;
+	I2Cx->CR1 &= ~I2C_CR1_SWRST;
 
-	// Set I2C clock: assuming 16 MHz APB1
-	I2C1->CR2 = 16;               // APB1 = 16 MHz
-	I2C1->CCR = 80;               // 100kHz standard mode
-	I2C1->TRISE = 17;             // 1000ns / (1/16MHz) + 1 = 17
-	I2C1->CR1 |= I2C_CR1_PE;      // Enable I2C
+	I2Cx->CR2 = (pclk1 / 1000000U);
+
+	if (i2c_speed <= 100000) {
+		I2Cx->CCR = pclk1 / (i2c_speed * 2);
+		I2Cx->TRISE = (pclk1 / 1000000U) + 1;
+	} else {
+		I2Cx->CCR = (pclk1 / (3 * i2c_speed)) | I2C_CCR_FS;
+		I2Cx->TRISE = ((pclk1 / 1000000U) * 300 / 1000) + 1;
+	}
+
+	I2Cx->CR1 |= I2C_CR1_PE;
+
+	return I2C_OK;
 }
 
-void I2C_start(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t direction)
+I2C_Status_t I2C_start(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t direction)
 {
+	uint32_t timeout = TIMEOUT;
+
 	I2Cx->CR1 |= I2C_CR1_START;
-	while (!(I2Cx->SR1 & I2C_SR1_SB));
+	while (!(I2Cx->SR1 & I2C_SR1_SB) && --timeout);
+	if (!timeout) return I2C_ERR_TIMEOUT;
 
 	I2Cx->DR = (addr << 1) | direction;
-	while (!(I2Cx->SR1 & I2C_SR1_ADDR));
+
+	timeout = TIMEOUT;
+	while (!(I2Cx->SR1 & I2C_SR1_ADDR) && --timeout);
+	if (!timeout) return I2C_ERR_TIMEOUT;
+
 	(void)I2Cx->SR1;
 	(void)I2Cx->SR2;
+
+	return I2C_OK;
 }
 
 void I2C_write(I2C_TypeDef *I2Cx, uint8_t data)
@@ -61,4 +77,35 @@ uint8_t I2C_read_nack(I2C_TypeDef *I2Cx)
 void I2C_stop(I2C_TypeDef *I2Cx)
 {
 	I2Cx->CR1 |= I2C_CR1_STOP;
+}
+
+I2C_Status_t I2C_write_bytes(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *data, uint16_t len)
+{
+	if (!data || len == 0) return I2C_ERR_NULLPTR;
+
+	I2C_Status_t status = I2C_start(I2Cx, addr, I2C_WRITE);
+	if (status != I2C_OK) return status;
+
+	for (uint16_t i = 0; i < len; i++)
+		I2C_write(I2Cx, data[i]);
+
+	I2C_stop(I2Cx);
+	return I2C_OK;
+}
+
+I2C_Status_t I2C_read_bytes(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *buf, uint16_t len)
+{
+	if (!buf || len == 0) return I2C_ERR_NULLPTR;
+
+	I2C_Status_t status = I2C_start(I2Cx, addr, I2C_READ);
+	if (status != I2C_OK) return status;
+
+	for (uint16_t i = 0; i < len; i++) {
+		if (i == (len - 1))
+			buf[i] = I2C_read_nack(I2Cx);
+		else
+			buf[i] = I2C_read_ack(I2Cx);
+	}
+
+	return I2C_OK;
 }

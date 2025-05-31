@@ -33,6 +33,26 @@
 #define GPIO_PULL_DOWN         0x02
 
 //
+// ===== GPIO ALTERNATE FUNCTION MACROS =====
+//
+#define GPIO_AF0    0x00
+#define GPIO_AF1    0x01
+#define GPIO_AF2    0x02
+#define GPIO_AF3    0x03
+#define GPIO_AF4    0x04
+#define GPIO_AF5    0x05
+#define GPIO_AF6    0x06
+#define GPIO_AF7    0x07
+#define GPIO_AF8    0x08
+#define GPIO_AF9    0x09
+#define GPIO_AF10   0x0A
+#define GPIO_AF11   0x0B
+#define GPIO_AF12   0x0C
+#define GPIO_AF13   0x0D
+#define GPIO_AF14   0x0E
+#define GPIO_AF15   0x0F
+
+//
 // ===== GPIO PIN STATE =====
 //
 #define GPIO_PIN_RESET         0
@@ -59,5 +79,6 @@ void GPIO_init(GPIO_TypeDef *GPIOx, GPIO_config_t *pinConfig);
 void GPIO_write_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no, uint8_t value);
 uint8_t GPIO_read_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no);
 void GPIO_toggle_pin(GPIO_TypeDef *GPIOx, uint8_t pin_no);
+void GPIO_deinit(GPIO_TypeDef *GPIOx, uint8_t pin_no);
 
 #endif

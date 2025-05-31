@@ -106,7 +106,7 @@ void GPIO_init(GPIO_TypeDef *GPIOx, GPIO_config_t *pinConfig)
 	
 	gpio_config_mode(GPIOx, pin_no, mode);
 
-	if (mode == 0x01 || mode == 0x02)  // Output or Alternate Function
+	if (mode == GPIO_MODE_OUTPUT || mode == GPIO_MODE_ALTFN)  // Output or Alternate Function
 	{
 		gpio_config_otype(GPIOx, pin_no, otype);
 		gpio_config_speed(GPIOx, pin_no, speed);
@@ -114,8 +114,22 @@ void GPIO_init(GPIO_TypeDef *GPIOx, GPIO_config_t *pinConfig)
 
 	gpio_config_pupd(GPIOx, pin_no, pupd);
 
-	if (mode == 0x02)  // Alternate Function mode
+	if (mode == GPIO_MODE_ALTFN)  // Alternate Function mode
 	{
 		gpio_config_alt_func(GPIOx, pin_no, alt_func);
 	}
 }
+
+// Deinitialization
+void GPIO_deinit(GPIO_TypeDef *GPIOx, uint8_t pin_no)
+{
+    GPIOx->MODER &= ~(0x3 << (2 * pin_no));
+    GPIOx->OTYPER &= ~(1 << pin_no);
+    GPIOx->OSPEEDR &= ~(0x3 << (2 * pin_no));
+    GPIOx->PUPDR &= ~(0x3 << (2 * pin_no));
+
+    uint8_t reg_idx = pin_no / 8;
+    uint8_t bit_pos = (pin_no % 8) * 4;
+    GPIOx->AFR[reg_idx] &= ~(0xF << bit_pos);
+}
+
