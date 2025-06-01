@@ -2,6 +2,7 @@
 #include "GPIO_Driver_H.h"
 #include "EXTI_Driver.h"
 #include "I2C_Driver_H.h"
+#include "TSL2591_H.h"
 
 // Global variables for LEDs 
 uint8_t LED1_PIN = 10;
@@ -81,8 +82,23 @@ int main (void)
 	// Initiating I2C communication
 	I2C_init(I2C1, 16000000, 100000);
 	
-	while(1)
+	// Init sensor
+	TSL2591_init(I2C1);
+
+	while (1)
 	{
+		uint16_t ch0 = TSL2591_read_ch0(I2C1);
+		uint32_t lux = TSL2591_calculate_lux(ch0);
+
+		if (lux < 200) { // Day
+			GPIO_write_pin(GPIOC, LED1_PIN, 0);  // LED1 on
+			GPIO_write_pin(GPIOC, LED2_PIN, 1);  // LED2 off
+		} else {        // Night
+			GPIO_write_pin(GPIOC, LED1_PIN, 1);
+			GPIO_write_pin(GPIOC, LED2_PIN, 0);
+		}
+
+		for (volatile int i = 0; i < 100000; ++i); // Small delay
 	}
 
 	return 0;

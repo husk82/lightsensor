@@ -427,6 +427,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>TSLLightSensor</GroupName>
+          <Files>
+            <File>
+              <FileName>TSL2591.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TSL2591.c</FilePath>
+            </File>
+            <File>
+              <FileName>TSL2591_H.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\TSL2591_H.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
