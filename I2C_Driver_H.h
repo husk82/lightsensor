@@ -1,5 +1,5 @@
-#ifndef I2C_DRIVER_H_
-#define I2C_DRIVER_H_
+#ifndef I2C_DRIVER_H
+#define I2C_DRIVER_H
 
 #include "stm32f4xx.h"
 #include <stdint.h>

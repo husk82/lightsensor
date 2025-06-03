@@ -69,7 +69,7 @@ uint8_t I2C_read_ack(I2C_TypeDef *I2Cx)
 uint8_t I2C_read_nack(I2C_TypeDef *I2Cx)
 {
 	I2Cx->CR1 &= ~I2C_CR1_ACK;
-	I2Cx->CR1 |= I2C_CR1_STOP;
+	I2C_stop(I2Cx);
 	while (!(I2Cx->SR1 & I2C_SR1_RXNE));
 	return I2Cx->DR;
 }

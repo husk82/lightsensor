@@ -424,6 +424,16 @@
               <FileType>1</FileType>
               <FilePath>.\I2C_Driver.c</FilePath>
             </File>
+            <File>
+              <FileName>TIM_Driver_H.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\TIM_Driver_H.h</FilePath>
+            </File>
+            <File>
+              <FileName>TIM_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TIM_Driver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

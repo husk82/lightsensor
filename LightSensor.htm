@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\LightSensor.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\LightSensor.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Sun Jun  1 13:33:51 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Mon Jun  2 21:38:53 2025
 <BR><P>
-<H3>Maximum Stack Usage =        160 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        192 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; TSL2591_read_ch0 &rArr; TSL2591_read &rArr; I2C_start
 <P>
@@ -63,7 +63,7 @@ Function Pointers
  <LI><a href="#[4e]">DMA2_Stream7_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
  <LI><a href="#[7]">DebugMon_Handler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
  <LI><a href="#[10]">EXTI0_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
- <LI><a href="#[32]">EXTI15_10_IRQHandler</a> from main.o(.text.EXTI15_10_IRQHandler) referenced from startup_stm32f446xx.o(RESET)
+ <LI><a href="#[32]">EXTI15_10_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
  <LI><a href="#[11]">EXTI1_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
  <LI><a href="#[12]">EXTI2_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
  <LI><a href="#[13]">EXTI3_IRQHandler</a> from startup_stm32f446xx.o(.text) referenced from startup_stm32f446xx.o(RESET)
@@ -253,7 +253,7 @@ Global Symbols
 <P><STRONG><a name="[ab]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[6d]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 192 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; TSL2591_read_ch0 &rArr; TSL2591_read &rArr; I2C_start
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -428,6 +428,9 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f446xx.o(RESET)
 </UL>
 <P><STRONG><a name="[10]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f446xx.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f446xx.o(RESET)
+</UL>
+<P><STRONG><a name="[32]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f446xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f446xx.o(RESET)
 </UL>
 <P><STRONG><a name="[11]"></a>EXTI1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f446xx.o(.text))
@@ -648,102 +651,93 @@ Global Symbols
 
 <P><STRONG><a name="[b5]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[32]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, main.o(.text.EXTI15_10_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = EXTI15_10_IRQHandler &rArr; GPIO_toggle_pin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_toggle_pin
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_clear_pending
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f446xx.o(RESET)
-</UL>
-<P><STRONG><a name="[76]"></a>EXTI_clear_pending</STRONG> (Thumb, 58 bytes, Stack size 4 bytes, exti_driver.o(.text.EXTI_clear_pending))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = EXTI_clear_pending
-</UL>
-<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_10_IRQHandler
-</UL>
-
-<P><STRONG><a name="[78]"></a>GPIO_init</STRONG> (Thumb, 170 bytes, Stack size 24 bytes, gpio_driver.o(.text.GPIO_init))
+<P><STRONG><a name="[76]"></a>GPIO_init</STRONG> (Thumb, 170 bytes, Stack size 24 bytes, gpio_driver.o(.text.GPIO_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = GPIO_init &rArr; gpio_config_alt_func
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alt_func
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_pupd
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_speed
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_otype
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_mode
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_clock_enable
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alt_func
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_pupd
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_speed
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_otype
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_mode
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_clock_enable
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[77]"></a>GPIO_toggle_pin</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, gpio_driver.o(.text.GPIO_toggle_pin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GPIO_toggle_pin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_10_IRQHandler
-</UL>
-
-<P><STRONG><a name="[87]"></a>GPIO_write_pin</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, gpio_driver.o(.text.GPIO_write_pin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GPIO_write_pin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[88]"></a>I2C_init</STRONG> (Thumb, 340 bytes, Stack size 16 bytes, i2c_driver.o(.text.I2C_init))
+<P><STRONG><a name="[87]"></a>I2C_init</STRONG> (Thumb, 340 bytes, Stack size 16 bytes, i2c_driver.o(.text.I2C_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[84]"></a>I2C_read_nack</STRONG> (Thumb, 50 bytes, Stack size 4 bytes, i2c_driver.o(.text.I2C_read_nack))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = I2C_read_nack
+<P><STRONG><a name="[7d]"></a>I2C_read_nack</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, i2c_driver.o(.text.I2C_read_nack))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = I2C_read_nack &rArr; I2C_stop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_stop
+</UL>
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
 </UL>
 
-<P><STRONG><a name="[82]"></a>I2C_start</STRONG> (Thumb, 188 bytes, Stack size 24 bytes, i2c_driver.o(.text.I2C_start))
+<P><STRONG><a name="[84]"></a>I2C_start</STRONG> (Thumb, 188 bytes, Stack size 24 bytes, i2c_driver.o(.text.I2C_start))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C_start
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
 </UL>
 
-<P><STRONG><a name="[85]"></a>I2C_stop</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, i2c_driver.o(.text.I2C_stop))
+<P><STRONG><a name="[7e]"></a>I2C_stop</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, i2c_driver.o(.text.I2C_stop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = I2C_stop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_read_nack
 </UL>
 
-<P><STRONG><a name="[83]"></a>I2C_write</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, i2c_driver.o(.text.I2C_write))
+<P><STRONG><a name="[85]"></a>I2C_write</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, i2c_driver.o(.text.I2C_write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
 </UL>
 
 <P><STRONG><a name="[60]"></a>SystemInit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f446xx.o(.text)
 </UL>
-<P><STRONG><a name="[89]"></a>TSL2591_calculate_lux</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, tsl2591.o(.text.TSL2591_calculate_lux))
+<P><STRONG><a name="[7f]"></a>TIM_PWM_init</STRONG> (Thumb, 280 bytes, Stack size 16 bytes, tim_driver.o(.text.TIM_PWM_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = TIM_PWM_init &rArr; enable_tim_clock
+</UL>
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_tim_clock
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[89]"></a>TIM_PWM_set_duty</STRONG> (Thumb, 92 bytes, Stack size 12 bytes, tim_driver.o(.text.TIM_PWM_set_duty))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = TIM_PWM_set_duty
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[88]"></a>TSL2591_calculate_lux</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, tsl2591.o(.text.TSL2591_calculate_lux))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = TSL2591_calculate_lux
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7f]"></a>TSL2591_init</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, tsl2591.o(.text.TSL2591_init))
+<P><STRONG><a name="[81]"></a>TSL2591_init</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, tsl2591.o(.text.TSL2591_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = TSL2591_init &rArr; TSL2591_write &rArr; I2C_start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
+<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[81]"></a>TSL2591_read</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, tsl2591.o(.text.TSL2591_read))
+<P><STRONG><a name="[83]"></a>TSL2591_read</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, tsl2591.o(.text.TSL2591_read))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = TSL2591_read &rArr; I2C_start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_stop
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_read_nack
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_write
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_start
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_stop
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_read_nack
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_write
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_start
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read_ch0
 </UL>
@@ -751,30 +745,31 @@ Global Symbols
 <P><STRONG><a name="[86]"></a>TSL2591_read_ch0</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, tsl2591.o(.text.TSL2591_read_ch0))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = TSL2591_read_ch0 &rArr; TSL2591_read &rArr; I2C_start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
+<BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[80]"></a>TSL2591_write</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tsl2591.o(.text.TSL2591_write))
+<P><STRONG><a name="[82]"></a>TSL2591_write</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tsl2591.o(.text.TSL2591_write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = TSL2591_write &rArr; I2C_start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_stop
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_write
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_start
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_stop
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_write
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_start
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_init
+<BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_init
 </UL>
 
-<P><STRONG><a name="[6e]"></a>main</STRONG> (Thumb, 458 bytes, Stack size 96 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = main &rArr; TSL2591_read_ch0 &rArr; TSL2591_read &rArr; I2C_start
+<P><STRONG><a name="[6e]"></a>main</STRONG> (Thumb, 438 bytes, Stack size 128 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = main &rArr; TSL2591_read_ch0 &rArr; TSL2591_read &rArr; I2C_start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_calculate_lux
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_PWM_set_duty
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_calculate_lux
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_read_ch0
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_init
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_init
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_write_pin
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TSL2591_init
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_init
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_PWM_init
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -790,40 +785,46 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[79]"></a>GPIO_clock_enable</STRONG> (Thumb, 292 bytes, Stack size 4 bytes, gpio_driver.o(.text.GPIO_clock_enable))
+<P><STRONG><a name="[77]"></a>GPIO_clock_enable</STRONG> (Thumb, 292 bytes, Stack size 4 bytes, gpio_driver.o(.text.GPIO_clock_enable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GPIO_clock_enable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[7a]"></a>gpio_config_mode</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_mode))
+<P><STRONG><a name="[78]"></a>gpio_config_mode</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_mode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = gpio_config_mode
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[7b]"></a>gpio_config_otype</STRONG> (Thumb, 50 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_otype))
+<P><STRONG><a name="[79]"></a>gpio_config_otype</STRONG> (Thumb, 50 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_otype))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = gpio_config_otype
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[7c]"></a>gpio_config_speed</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_speed))
+<P><STRONG><a name="[7a]"></a>gpio_config_speed</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_speed))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = gpio_config_speed
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[7d]"></a>gpio_config_pupd</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_pupd))
+<P><STRONG><a name="[7b]"></a>gpio_config_pupd</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, gpio_driver.o(.text.gpio_config_pupd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = gpio_config_pupd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[7e]"></a>gpio_config_alt_func</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, gpio_driver.o(.text.gpio_config_alt_func))
+<P><STRONG><a name="[7c]"></a>gpio_config_alt_func</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, gpio_driver.o(.text.gpio_config_alt_func))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_alt_func
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
+</UL>
+
+<P><STRONG><a name="[80]"></a>enable_tim_clock</STRONG> (Thumb, 502 bytes, Stack size 4 bytes, tim_driver.o(.text.enable_tim_clock))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = enable_tim_clock
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_PWM_init
 </UL>
 <P>
 <H3>

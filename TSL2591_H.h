@@ -2,6 +2,7 @@
 #define TSL2591_H
 
 #include "stm32f446xx.h"
+#include "I2C_Driver_H.h"
 
 // I2C address for TSL2591
 #define TSL2591_ADDR         0x29
