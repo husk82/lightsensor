@@ -4,12 +4,15 @@
 #include "I2C_Driver_H.h"
 #include "TSL2591_H.h"
 #include "TIM_Driver_H.h"
+#include "SSD1306_H.h"
 
 // Global variables for LEDs 
 uint8_t LED1_PIN = 6;
 uint8_t LED2_PIN = 7;
-uint8_t I2C_SCL_PIN = 8;
-uint8_t I2C_SDA_PIN = 9;
+uint8_t I2C_SCL_PIN_LIGHT = 8;
+uint8_t I2C_SDA_PIN_LIGHT = 9;
+uint8_t I2C_SCL_PIN_OLED = 10;
+uint8_t I2C_SDA_PIN_OLED = 3;
 
 int main (void)
 {
@@ -57,32 +60,63 @@ int main (void)
 	
 	// --- I2C Pin Config --
 	// Configure PB8 as I2C SCL
-	GPIO_config_t scl;
-	scl.pin_no = I2C_SCL_PIN;
-	scl.mode = GPIO_MODE_ALTFN;
-	scl.oType = GPIO_OUTPUT_OD;
-	scl.speed = GPIO_SPEED_HIGH;
-	scl.pull = GPIO_PULL_UP;
-	scl.altFunc = GPIO_AF4;
+	GPIO_config_t scl_light;
+	scl_light.pin_no = I2C_SCL_PIN_LIGHT;
+	scl_light.mode = GPIO_MODE_ALTFN;
+	scl_light.oType = GPIO_OUTPUT_OD;
+	scl_light.speed = GPIO_SPEED_HIGH;
+	scl_light.pull = GPIO_PULL_UP;
+	scl_light.altFunc = GPIO_AF4;
 	
-	GPIO_init(GPIOB, &scl);
+	GPIO_init(GPIOB, &scl_light);
 	
 	// Configure PB9 as I2C SCL
-	GPIO_config_t sda;
-	sda.pin_no = I2C_SDA_PIN;
-	sda.mode = GPIO_MODE_ALTFN;
-	sda.oType = GPIO_OUTPUT_OD;
-	sda.speed = GPIO_SPEED_HIGH;
-	sda.pull = GPIO_PULL_UP;
-	sda.altFunc = GPIO_AF4;
+	GPIO_config_t sda_light;
+	sda_light.pin_no = I2C_SDA_PIN_LIGHT;
+	sda_light.mode = GPIO_MODE_ALTFN;
+	sda_light.oType = GPIO_OUTPUT_OD;
+	sda_light.speed = GPIO_SPEED_HIGH;
+	sda_light.pull = GPIO_PULL_UP;
+	sda_light.altFunc = GPIO_AF4;
 	
-	GPIO_init(GPIOB, &sda);
+	GPIO_init(GPIOB, &sda_light);
+	
+	GPIO_config_t scl_oled;
+	scl_oled.pin_no = I2C_SCL_PIN_OLED;
+	scl_oled.mode = GPIO_MODE_ALTFN;
+	scl_oled.oType = GPIO_OUTPUT_OD;
+	scl_oled.speed = GPIO_SPEED_HIGH;
+	scl_oled.pull = GPIO_PULL_UP;
+	scl_oled.altFunc = GPIO_AF4;
+	
+	GPIO_init(GPIOB, &scl_oled);
+	
+	// Configure PB9 as I2C SCL
+	GPIO_config_t sda_oled;
+	sda_oled.pin_no = I2C_SDA_PIN_OLED;
+	sda_oled.mode = GPIO_MODE_ALTFN;
+	sda_oled.oType = GPIO_OUTPUT_OD;
+	sda_oled.speed = GPIO_SPEED_HIGH;
+	sda_oled.pull = GPIO_PULL_UP;
+	sda_oled.altFunc = GPIO_AF4;
+	
+	GPIO_init(GPIOB, &sda_oled);
 	
 	// Initiating I2C communication
 	I2C_init(I2C1, 16000000, 100000);
+	I2C_init(I2C2, 16000000, 100000);
 	
 	// Init sensor
 	TSL2591_init(I2C1);
+	
+	// Init OLED
+  SSD1306_init(I2C2);
+	
+	// Display something
+	SSD1306_clear();
+	for (uint8_t i = 0; i < 64; i++)
+    SSD1306_draw_pixel(i, i, 1);
+	SSD1306_update();
 
 	while (1)
 	{	
@@ -90,11 +124,11 @@ int main (void)
 		uint32_t lux = TSL2591_calculate_lux(ch0);
 
 		if (lux < 200) { // Day
-			TIM_PWM_set_duty(&pwm1, 100);  // 50% duty cycle
+			TIM_PWM_set_duty(&pwm1, 50);  // 5% duty cycle
 			TIM_PWM_set_duty(&pwm2, 1000);  // 100% duty cycle
 		} else {        // Night
-			TIM_PWM_set_duty(&pwm1, 1000);  // 50% duty cycle
-			TIM_PWM_set_duty(&pwm2, 100);  // 100% duty cycle
+			TIM_PWM_set_duty(&pwm1, 1000);  
+			TIM_PWM_set_duty(&pwm2, 100);  
 		}
 
 		for (volatile int i = 0; i < 100000; ++i); // Small delay

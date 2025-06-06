@@ -452,6 +452,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>OLEDSSD1306</GroupName>
+          <Files>
+            <File>
+              <FileName>SSD1306_H.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\SSD1306_H.h</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SSD1306.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
