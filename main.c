@@ -81,6 +81,7 @@ int main (void)
 	
 	GPIO_init(GPIOB, &sda_light);
 	
+	// Configure PB10 as I2C SCL
 	GPIO_config_t scl_oled;
 	scl_oled.pin_no = I2C_SCL_PIN_OLED;
 	scl_oled.mode = GPIO_MODE_ALTFN;
@@ -91,7 +92,7 @@ int main (void)
 	
 	GPIO_init(GPIOB, &scl_oled);
 	
-	// Configure PB9 as I2C SCL
+	// Configure PB3 as I2C SDA
 	GPIO_config_t sda_oled;
 	sda_oled.pin_no = I2C_SDA_PIN_OLED;
 	sda_oled.mode = GPIO_MODE_ALTFN;
@@ -116,7 +117,7 @@ int main (void)
 	SSD1306_clear();
 	for (uint8_t i = 0; i < 64; i++)
     SSD1306_draw_pixel(i, i, 1);
-	SSD1306_update();
+	SSD1306_update(I2C2);
 
 	while (1)
 	{	

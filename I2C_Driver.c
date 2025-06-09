@@ -78,34 +78,3 @@ void I2C_stop(I2C_TypeDef *I2Cx)
 {
 	I2Cx->CR1 |= I2C_CR1_STOP;
 }
-
-I2C_Status_t I2C_write_bytes(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *data, uint16_t len)
-{
-	if (!data || len == 0) return I2C_ERR_NULLPTR;
-
-	I2C_Status_t status = I2C_start(I2Cx, addr, I2C_WRITE);
-	if (status != I2C_OK) return status;
-
-	for (uint16_t i = 0; i < len; i++)
-		I2C_write(I2Cx, data[i]);
-
-	I2C_stop(I2Cx);
-	return I2C_OK;
-}
-
-I2C_Status_t I2C_read_bytes(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *buf, uint16_t len)
-{
-	if (!buf || len == 0) return I2C_ERR_NULLPTR;
-
-	I2C_Status_t status = I2C_start(I2Cx, addr, I2C_READ);
-	if (status != I2C_OK) return status;
-
-	for (uint16_t i = 0; i < len; i++) {
-		if (i == (len - 1))
-			buf[i] = I2C_read_nack(I2Cx);
-		else
-			buf[i] = I2C_read_ack(I2Cx);
-	}
-
-	return I2C_OK;
-}
