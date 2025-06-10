@@ -75,3 +75,22 @@ void SSD1306_draw_pixel(uint8_t x, uint8_t y, uint8_t color) {
 	else
 		buffer[index] &= ~(1 << (y % 8));
 }
+
+// Draw char
+void SSD1306_draw_char(uint8_t x, uint8_t y, char c) {
+    if (c < 32 || c > 126) c = '?'; // handle unsupported chars
+    for (uint8_t i = 0; i < 5; i++) {
+        uint8_t col = font5x7[c - 32][i];
+        for (uint8_t j = 0; j < 7; j++) {
+            SSD1306_draw_pixel(x + i, y + j, (col >> j) & 0x01);
+        }
+    }
+}
+
+// Draw string
+void SSD1306_draw_string(uint8_t x, uint8_t y, const char* str) {
+    while (*str) {
+        SSD1306_draw_char(x, y, *str++);
+        x += 6; // 5 pixels width + 1 space
+    }
+}

@@ -113,10 +113,9 @@ int main (void)
 	// Init OLED
   SSD1306_init(I2C2);
 	
-	// Display something
+	// Display Hello World
 	SSD1306_clear();
-	for (uint8_t i = 0; i < 64; i++)
-    SSD1306_draw_pixel(i, i, 1);
+	SSD1306_draw_string(0, 0, "Hello, World");
 	SSD1306_update(I2C2);
 
 	while (1)
