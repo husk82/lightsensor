@@ -14,7 +14,17 @@
 	uint8_t I2C_SDA_PIN_LIGHT = 9;
 	uint8_t I2C_SCL_PIN_OLED = 10;
 	uint8_t I2C_SDA_PIN_OLED = 3;
-
+	uint32_t LUX_MIN = 0;
+	uint32_t LUX_MAX = 1500;
+	
+	// === Helper Functions === //
+	uint32_t scale_lux_to_pwm(uint32_t lux) {
+    if (lux < LUX_MIN) lux = LUX_MIN;
+    if (lux > LUX_MAX) lux = LUX_MAX;
+    
+    return 999 - (lux - LUX_MIN) * 999 / (LUX_MAX - LUX_MIN);
+	}
+	
 	int main (void)
 	{
 	// --- Led Pin Config---
@@ -131,13 +141,10 @@
 	
 	uint32_t lux = TSL2591_calculate_lux(ch0, ch1);
 
-	if (lux > 200) {
-		TIM_PWM_set_duty(&pwm1, 50);
-		TIM_PWM_set_duty(&pwm2, 1000);
-	} else {
-		TIM_PWM_set_duty(&pwm1, 1000);
-		TIM_PWM_set_duty(&pwm2, 100);
-	}
+	uint32_t duty = scale_lux_to_pwm(lux);
+		
+	TIM_PWM_set_duty(&pwm1, duty);  
+  TIM_PWM_set_duty(&pwm2, 999 - duty); 
 
 	sprintf(buffer1, "Lux: %u", lux);
 	sprintf(buffer2, "C0:%u C1:%u", ch0, ch1);
